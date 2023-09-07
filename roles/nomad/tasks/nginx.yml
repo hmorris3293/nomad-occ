@@ -3,9 +3,13 @@
   set_fact:
     rdns_period: "{{ lookup('community.general.dig', '{{ nomad_data.server[0].instance.ip_pub1 }}/PTR') }}"
 
-- name: remove trailing period using regex_replace
+- name: Remove trailing period using shell command
+  shell: echo "{{ rdns_period }}" | sed 's/\.$//'
+  register: rdns_without_period
+
+- name: Set the fact without the trailing period
   set_fact:
-    rdns: "{{ rdns_period | regex_replace('\.$', '') }}"
+    rdns: "{{ rdns_without_period.stdout | trim }}"
 
 - name: install nginx & certbot
   apt:
