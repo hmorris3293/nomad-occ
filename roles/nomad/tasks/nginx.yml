@@ -1,7 +1,11 @@
 --- 
 - name: setting RDNS
   set_fact:
-    rdns: "{{ lookup('community.general.dig', '{{ nomad_data.server[0].instance.ip_pub1 }}/PTR')| regex_replace('\.$', '') }}"
+    rdns_period: "{{ lookup('community.general.dig', '{{ nomad_data.server[0].instance.ip_pub1 }}/PTR') }}"
+
+- name: remove trailing period using regex_replace
+  set_fact:
+    rdns: "{{ rdns_period | regex_replace('\.$', '') }}"
 
 - name: install nginx & certbot
   apt:
