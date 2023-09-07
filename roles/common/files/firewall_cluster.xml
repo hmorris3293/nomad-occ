@@ -4,8 +4,6 @@
   <description>Nomad Cluster GOSSIP</description>
   <service name="ssh"/>
   <service name="mdns"/>
-  <service name="http"/>
-  <service name="https"/>
   <service name="samba-client"/>
   <service name="dhcpv6-client"/>
   <port port="4648" protocol="udp"/>
